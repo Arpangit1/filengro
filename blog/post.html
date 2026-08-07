@@ -1,0 +1,456 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loading Article... | Filengro.in</title>
+  <meta name="description" content="Filengro compliance insights and business guides.">
+
+  <!-- Open Graph (updated dynamically) -->
+  <meta property="og:type" content="article">
+  <meta id="ogTitle" property="og:title" content="Filengro Blog">
+  <meta id="ogDesc" property="og:description" content="">
+  <meta id="ogImage" property="og:image" content="">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    /* Article body content styling */
+    .blog-body-text {
+      line-height: 1.9;
+      color: var(--neutral-body);
+      font-size: 1.05rem;
+    }
+    .blog-body-text h1,
+    .blog-body-text h2,
+    .blog-body-text h3,
+    .blog-body-text h4 {
+      color: var(--primary-dark);
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .blog-body-text h2 { font-size: 1.55rem; }
+    .blog-body-text h3 { font-size: 1.25rem; }
+    .blog-body-text p  { margin-bottom: 1.1rem; }
+    .blog-body-text ul,
+    .blog-body-text ol { margin: 1rem 0 1.5rem 1.5rem; }
+    .blog-body-text li { margin-bottom: 0.5rem; }
+    .blog-body-text img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+    }
+    .blog-body-text blockquote {
+      border-left: 4px solid var(--accent-orange);
+      background: #f8fafc;
+      padding: 1rem 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+      color: var(--neutral-muted);
+    }
+    .blog-body-text table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+    }
+    .blog-body-text th,
+    .blog-body-text td {
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--neutral-border);
+      text-align: left;
+    }
+    .blog-body-text th {
+      background: var(--primary-dark);
+      color: #fff;
+      font-weight: 600;
+    }
+    /* Loading skeleton pulse */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
+    .skeleton {
+      background: #e2e8f0;
+      border-radius: 6px;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Header -->
+  <header class="header">
+    <div class="container nav-container">
+      <a href="../index.html" class="logo">
+        <img src="../images/logo.png" alt="Filengro" class="logo-img">Filen<span>gro</span>
+      </a>
+      
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="nav-menu" id="navMenu">
+        <a href="../index.html"   class="nav-link">Home</a>
+        <a href="../services.html" class="nav-link">Services</a>
+        <a href="../tools.html"    class="nav-link">Tools</a>
+        <a href="../blog.html"    class="nav-link active">Blog</a>
+        <a href="../about.html"   class="nav-link">About</a>
+        <a href="../contact.html" class="nav-link">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Article Hero (populated by JS) -->
+  <section class="service-detail-hero" id="articleHero">
+    <div class="container">
+      <div class="breadcrumb" id="articleBreadcrumb">
+        <a href="../index.html">Home</a>
+        <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;"></i>
+        <a href="../blog.html">Blog</a>
+        <i class="fa-solid fa-chevron-right" style="font-size:0.7rem;"></i>
+        <span id="breadcrumbText">Loading...</span>
+      </div>
+
+      <span id="heroCategoryBadge" class="badge" style="background:rgba(255,107,53,0.15);color:var(--accent-orange);padding:0.25rem 0.75rem;border-radius:50px;font-weight:700;font-size:0.8rem;margin-bottom:0.75rem;display:inline-block;"></span>
+      <h1 id="heroTitle" style="font-size:2.1rem;color:var(--white);margin-bottom:0.75rem;line-height:1.3;">Loading article...</h1>
+      <div style="font-size:0.85rem;color:#94A3B8;font-weight:500;">
+        <span style="margin-right:1.5rem;"><i class="fa-regular fa-calendar" style="margin-right:0.3rem;"></i><span id="heroDate"></span></span>
+        <span><i class="fa-regular fa-clock" style="margin-right:0.3rem;"></i><span id="heroReadTime"></span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Article Body Section -->
+  <section class="section">
+    <div class="container">
+
+      <!-- Loading State -->
+      <div id="loadingState" style="text-align:center;padding:5rem 0;">
+        <div style="display:inline-block;width:50px;height:50px;border:4px solid rgba(48,102,190,0.1);border-radius:50%;border-top-color:var(--primary-light);animation:spin 1s linear infinite;margin-bottom:1.5rem;"></div>
+        <h3 style="font-size:1.2rem;color:var(--primary-dark);">Loading Article...</h3>
+        <p style="color:var(--neutral-muted);font-size:0.95rem;">Fetching the latest content from our feed.</p>
+      </div>
+
+      <!-- Error State -->
+      <div id="errorState" style="display:none;max-width:600px;margin:0 auto;text-align:center;padding:4rem 2rem;background:var(--white);border-radius:var(--border-radius-lg);border:1px dashed var(--neutral-border);box-shadow:var(--shadow-sm);">
+        <div style="font-size:4rem;color:var(--accent-orange);margin-bottom:1.5rem;">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <h2 style="font-size:2rem;color:var(--primary-dark);margin-bottom:1rem;">Article Not Found</h2>
+        <p style="color:var(--neutral-muted);font-size:1.05rem;line-height:1.6;margin-bottom:2rem;">
+          This article may have been removed or the link is incorrect. Please browse our other publications.
+        </p>
+        <a href="../blog.html" class="btn btn-primary"><i class="fa-solid fa-arrow-left" style="margin-right:0.4rem;"></i>Back to Blog</a>
+      </div>
+
+      <!-- Main Article Grid -->
+      <div id="articleMainGrid" class="service-detail-grid" style="display:none;">
+        
+        <!-- Left: Article Content -->
+        <article class="service-content-body">
+          <div id="featuredImageBox"></div>
+          <div id="articleBody" class="blog-body-text"></div>
+
+          <!-- Bottom bar: Back + Share -->
+          <div style="margin-top:3rem;border-top:1px solid var(--neutral-border);padding-top:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem;">
+            <a href="../blog.html" class="btn btn-outline">
+              <i class="fa-solid fa-arrow-left" style="margin-right:0.5rem;"></i>Back to Blog
+            </a>
+            <div style="display:flex;align-items:center;gap:0.75rem;">
+              <span style="font-size:0.88rem;font-weight:600;color:var(--neutral-muted);">Share:</span>
+              <a id="shareWhatsapp" href="#" target="_blank" class="social-link" aria-label="Share on WhatsApp" style="background:#25D366;color:#fff;width:32px;height:32px;font-size:0.95rem;"><i class="fa-brands fa-whatsapp"></i></a>
+              <a id="shareLinkedIn" href="#" target="_blank" class="social-link" aria-label="Share on LinkedIn" style="background:#0077b5;color:#fff;width:32px;height:32px;font-size:0.95rem;"><i class="fa-brands fa-linkedin-in"></i></a>
+              <a id="shareFacebook" href="#" target="_blank" class="social-link" aria-label="Share on Facebook" style="background:#1877f2;color:#fff;width:32px;height:32px;font-size:0.95rem;"><i class="fa-brands fa-facebook-f"></i></a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Right: Sidebar -->
+        <aside class="service-sidebar">
+          <!-- CTA -->
+          <div class="sidebar-box sidebar-box-primary">
+            <h3>Need Expert Advice?</h3>
+            <p>Get immediate legal guidance, compliance setup, or licensing support from our qualified consultants.</p>
+            <a href="../contact.html" class="btn btn-accent" style="width:100%;text-align:center;margin-top:1rem;display:block;">
+              <i class="fa-solid fa-calendar-check" style="margin-right:0.4rem;"></i>Book Free Call
+            </a>
+          </div>
+
+          <!-- Recent Posts -->
+          <div class="sidebar-box">
+            <h3>Recent Articles</h3>
+            <ul class="sidebar-list" id="recentPostsList" style="list-style:none;padding:0;"></ul>
+          </div>
+
+          <!-- Services Quick Links -->
+          <div class="sidebar-box">
+            <h3>Our Services</h3>
+            <ul class="sidebar-list">
+              <li><a href="../gst-registration.html">GST Registration <i class="fa-solid fa-chevron-right"></i></a></li>
+              <li><a href="../company-registration.html">Company Registration <i class="fa-solid fa-chevron-right"></i></a></li>
+              <li><a href="../psara-license.html">PSARA License <i class="fa-solid fa-chevron-right"></i></a></li>
+              <li><a href="../labour-license.html">Labour License <i class="fa-solid fa-chevron-right"></i></a></li>
+              <li><a href="../iso-certification.html">ISO Certification <i class="fa-solid fa-chevron-right"></i></a></li>
+              <li><a href="../fssai-license.html">FSSAI License <i class="fa-solid fa-chevron-right"></i></a></li>
+            </ul>
+          </div>
+        </aside>
+
+      </div><!-- /articleMainGrid -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="../index.html" class="logo" style="color:#fff;">Filen<span>gro</span></a>
+        <p>Digital Business Compliance Platform. We support local startups, manpower companies, and security contractors in securing registrations, licenses, and compliance.</p>
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="social-link" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#" class="social-link" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="footer-links-title">Quick Links</h4>
+        <ul class="footer-links-list">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../about.html">About Us</a></li>
+          <li><a href="../services.html">Services Directory</a></li>
+          <li><a href="../blog.html">Blog & Insights</a></li>
+          <li><a href="../partner-with-us.html">Partner With Us</a></li>
+          <li><a href="../contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-links-title">Core Services</h4>
+        <ul class="footer-links-list">
+          <li><a href="../gst-registration.html">GST Registration</a></li>
+          <li><a href="../company-registration.html">Company Incorporation</a></li>
+          <li><a href="../iso-certification.html">ISO Certification</a></li>
+          <li><a href="../psara-license.html">PSARA License</a></li>
+          <li><a href="../labour-license.html">Labour License</a></li>
+          <li><a href="../website-designing.html">Website Designing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-links-title">Get in Touch</h4>
+        <div class="footer-contact-item">
+          <i class="fa-solid fa-location-dot"></i>
+          <span>All India Service<br>West Bengal, India</span>
+        </div>
+        <div class="footer-contact-item">
+          <i class="fa-solid fa-phone"></i>
+          <span>+91-8918239080</span>
+        </div>
+        <div class="footer-contact-item">
+          <i class="fa-solid fa-envelope"></i>
+          <span>support@filengro.in</span>
+        </div>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <div>&copy; 2026 Filengro. All rights reserved.</div>
+      <div class="footer-policy-links">
+        <a href="../privacy-policy.html">Privacy Policy</a>
+        <a href="../terms-conditions.html">Terms & Conditions</a>
+        <a href="../disclaimer.html">Disclaimer</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Float -->
+  <a href="#" class="whatsapp-float" id="whatsappFloat" aria-label="Chat on WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to Top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <script src="../js/main.js"></script>
+
+  <script>
+  (function () {
+    'use strict';
+
+    // ── Helpers ────────────────────────────────────────────────────────────────
+    function formatDate(str) {
+      try {
+        return new Date(str).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' });
+      } catch (e) { return str; }
+    }
+
+    function makeExcerpt(html) {
+      var d = document.createElement('div');
+      d.innerHTML = html || '';
+      var t = (d.textContent || d.innerText || '').replace(/\s+/g, ' ').trim();
+      return t.length > 160 ? t.substring(0, 160) + '...' : (t || 'Read full article on Filengro.');
+    }
+
+    function calcReadTime(html) {
+      var d = document.createElement('div');
+      d.innerHTML = html || '';
+      var words = (d.textContent || d.innerText || '').trim().split(/\s+/).length || 1;
+      return Math.ceil(words / 200) + ' min read';
+    }
+
+    function getSlug(entry) {
+      if (!entry.link) return '';
+      for (var i = 0; i < entry.link.length; i++) {
+        if (entry.link[i].rel === 'alternate') {
+          var url = entry.link[i].href;
+          var file = url.substring(url.lastIndexOf('/') + 1);
+          return file.replace('.html', '').toLowerCase();
+        }
+      }
+      return '';
+    }
+
+    function getImage(entry) {
+      if (entry.media$thumbnail && entry.media$thumbnail.url) {
+        return entry.media$thumbnail.url.replace(/\/s72-c\//, '/w800/');
+      }
+      if (entry.content && entry.content.$t) {
+        var m = entry.content.$t.match(/<img[^>]+src="([^">]+)"/i);
+        if (m) return m[1];
+      }
+      return null;
+    }
+
+    // ── Read ?slug from URL ───────────────────────────────────────────────────
+    var targetSlug = new URLSearchParams(window.location.search).get('slug') || '';
+
+    if (!targetSlug) {
+      document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('errorState').style.display   = 'block';
+    }
+
+    // ── Render the matched post ───────────────────────────────────────────────
+    function renderPost(post, allPosts) {
+      // Update <title> and meta tags
+      document.title = post.title + ' | Filengro.in';
+      document.querySelector('meta[name="description"]').setAttribute('content', post.excerpt);
+      document.getElementById('ogTitle').setAttribute('content', post.title + ' | Filengro.in');
+      document.getElementById('ogDesc').setAttribute('content', post.excerpt);
+      if (post.image) document.getElementById('ogImage').setAttribute('content', post.image);
+
+      // Hero section
+      document.getElementById('breadcrumbText').textContent = post.title;
+      document.getElementById('heroCategoryBadge').textContent = post.category;
+      document.getElementById('heroTitle').textContent       = post.title;
+      document.getElementById('heroDate').textContent        = formatDate(post.date);
+      document.getElementById('heroReadTime').textContent    = post.readTime;
+
+      // Featured image
+      if (post.image) {
+        document.getElementById('featuredImageBox').innerHTML =
+          '<div style="margin-bottom:2rem;border-radius:var(--border-radius-md);overflow:hidden;">' +
+          '<img src="' + post.image + '" alt="' + post.title + '" style="width:100%;max-height:420px;object-fit:cover;display:block;"></div>';
+      }
+
+      // Article body
+      document.getElementById('articleBody').innerHTML = post.content;
+
+      // Share buttons
+      var pageUrl = encodeURIComponent(window.location.href);
+      document.getElementById('shareWhatsapp').href  = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(post.title + ' ') + pageUrl;
+      document.getElementById('shareLinkedIn').href  = 'https://www.linkedin.com/sharing/share-offsite/?url=' + pageUrl;
+      document.getElementById('shareFacebook').href  = 'https://www.facebook.com/sharer/sharer.php?u=' + pageUrl;
+
+      // Recent posts sidebar
+      var list = document.getElementById('recentPostsList');
+      var others = allPosts.filter(function(p) { return p.slug !== post.slug; }).slice(0, 5);
+      if (others.length === 0) {
+        list.innerHTML = '<li style="padding:0.5rem;color:var(--neutral-muted);">No other articles yet.</li>';
+      } else {
+        list.innerHTML = others.map(function(p) {
+          return '<li><a href="post.html?slug=' + encodeURIComponent(p.slug) + '">' +
+                 '<span>' + p.title + '</span>' +
+                 '<i class="fa-solid fa-chevron-right" style="font-size:0.75rem;"></i>' +
+                 '</a></li>';
+        }).join('');
+      }
+
+      // Show article, hide loading
+      document.getElementById('loadingState').style.display    = 'none';
+      document.getElementById('articleMainGrid').style.display = 'grid';
+    }
+
+    // ── JSONP callback ─────────────────────────────────────────────────────────
+    var feedTimeout;
+
+    window.corpsolveFeedCallback = function (data) {
+      clearTimeout(feedTimeout);
+      try {
+        var entries = (data.feed && data.feed.entry) ? data.feed.entry : [];
+
+        // Map entries → post objects
+        var allPosts = entries.map(function (e) {
+          var slug    = getSlug(e);
+          var content = (e.content && e.content.$t) ? e.content.$t : '';
+          return {
+            slug:     slug,
+            title:    (e.title && e.title.$t) ? e.title.$t : 'Untitled',
+            date:     (e.published && e.published.$t) ? e.published.$t : '',
+            content:  content,
+            excerpt:  makeExcerpt(content),
+            readTime: calcReadTime(content),
+            category: (e.category && e.category.length > 0) ? e.category[0].term : 'Compliance',
+            image:    getImage(e)
+          };
+        });
+
+        // Find the post matching the slug
+        var matched = null;
+        for (var i = 0; i < allPosts.length; i++) {
+          if (allPosts[i].slug === targetSlug) {
+            matched = allPosts[i];
+            break;
+          }
+        }
+
+        if (!matched) {
+          document.getElementById('loadingState').style.display = 'none';
+          document.getElementById('errorState').style.display   = 'block';
+          return;
+        }
+
+        renderPost(matched, allPosts);
+      } catch (err) {
+        console.error('Post rendering error:', err);
+        document.getElementById('loadingState').style.display = 'none';
+        document.getElementById('errorState').style.display   = 'block';
+      }
+    };
+
+    // ── Inject JSONP script tag ───────────────────────────────────────────────
+    if (targetSlug) {
+      feedTimeout = setTimeout(function () {
+        document.getElementById('loadingState').style.display = 'none';
+        document.getElementById('errorState').style.display   = 'block';
+      }, 12000);
+
+      var s = document.createElement('script');
+      s.src = 'https://Filengro2026.blogspot.com/feeds/posts/default?alt=json-in-script&max-results=50&callback=corpsolveFeedCallback';
+      s.async = true;
+      s.onerror = function () {
+        clearTimeout(feedTimeout);
+        document.getElementById('loadingState').style.display = 'none';
+        document.getElementById('errorState').style.display   = 'block';
+      };
+      document.body.appendChild(s);
+    }
+  })();
+  </script>
+
+</body>
+</html>
